@@ -1,4 +1,10 @@
-# eclipse files
+# Eclipse files
 .classpath
 .project
 .settings/
+
+# Useless file
+.DS_Store
+
+# Compiled class file
+*.class
