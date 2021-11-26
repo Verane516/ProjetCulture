@@ -1,4 +1,4 @@
-package Domain;
+package domain;
 
 public class PieceDeTheatre {
 	private final int date; //intervalle de date : List ?
