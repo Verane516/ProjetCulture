@@ -1,4 +1,4 @@
-package Domain;
+package domain;
 
 //ValueObject
 public class Concert {
