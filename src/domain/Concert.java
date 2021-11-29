@@ -5,7 +5,7 @@ import java.util.Calendar;
 //ValueObject
 public class Concert extends Event {
 	// convention de codage : les attributs final sont en majuscules, espacées par un underscore
-	private final Calendar DATE;
+	private final Calendar DATE; // (AAAA,MM,JJ)
 	private final String NAME; //nom du groupe/artiste
 	
 	public Concert(int desiredCapacity, Calendar date, String name){
@@ -24,7 +24,15 @@ public class Concert extends Event {
 
 	@Override
 	public boolean checkDate(Slot slot) {
-		// TODO Auto-generated method stub
+		if (DATE.YEAR == slot.getSTART_DATE().YEAR) {
+			if (DATE.MONTH == slot.getSTART_DATE().MONTH) {
+				if (DATE.DAY_OF_MONTH == slot.getSTART_DATE().DAY_OF_MONTH) {
+					return true;
+				}
+			}
+			
+		}
+		
 		return false;
 	}
 }
