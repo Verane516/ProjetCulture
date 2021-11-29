@@ -1,14 +1,24 @@
 package domain;
 
+import java.util.Date;
+
 //ValueObject
-public class Concert {
-	private final int date; //date du concert
-	private final String nom; //nom du groupe/artiste
-	private final int capacite; //capacite désirée
+public class Concert extends Event {
+	// convention de codage : les attributs final sont en majuscules, espacées par un underscore
+	private final Date DATE;
+	private final String NAME; //nom du groupe/artiste
 	
-	public Concert(int _date, String _nom, int _capacite){
-		this.date=_date;
-		this.nom =_nom;
-		this.capacite=_capacite;
+	public Concert(int desiredCapacity, Date date, String name){
+		super(desiredCapacity);
+		this.DATE = date;
+		this.NAME = name;
+	}
+	
+	public Date getDate() {
+		return this.DATE;
+	}
+	
+	public String getName() {
+		return this.NAME;
 	}
 }
