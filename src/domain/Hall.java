@@ -1,51 +1,56 @@
 package domain;
-/*
-import java.util.List;
-import java.util.ArrayList;
-*/
+
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.Map;
 
-import java.util.Date;
 
-// Entity car une salle est définie par sa programmation qui est ammenée à changer
+
+// Aggregate car une salle est définie par sa programmation qui est ammenée à changer
 public class Hall {
-	// conseil : quand une info peut être obtenue en lisant le code il n'y a pas besoin de commentaire
 	private final int CAPACITY;
-	private final Map<Date,Schedule> TIMETABLE; // créneaux admissibles
+	private Map<Slot,Event> timetable; // planning
 	// chaque salle peut ouvrir sur une seule horaire par jour
 	// cette horaire peut varier lors des jours d'ouverture
-	private Map<Date,Event> programmedEvents; // créneaux alloués
+
 	
-	/*
-	private final List<Schedule> horaireSalle; //créer une classe horaire
-	private final int ouverture; //int ou date ou List ? (List car plusieurs dates d'ouverture sur la semaine ou le mois)
-	private final List<Event> programme; //programme de la salle
-	*/
-	
-	public Hall(int capacity, Map<Date,Schedule> timetable) {
+	public Hall(int capacity, Schedule schedule) {
 		this.CAPACITY = capacity;
-		this.TIMETABLE = timetable;
-		this.programmedEvents = new HashMap<Date,Event>();
-		/*
-		this.horaireSalle = new ArrayList<Schedule>();
-		this.programme = new ArrayList<Event>();
-		*/
+		this.timetable = Hall.generateTimetable(schedule);
+	}
+
+	private static Map<Slot, Event> generateTimetable(Schedule schedule) {
+		Map<Slot, Event> timetable = new HashMap<Slot, Event>();
+	    Iterator<Slot> it = schedule.iterator();
+	    Slot s;
+	    while (it.hasNext()) {
+	    	s = it.next();
+	    	timetable.put(s, null);
+	    }
+		return timetable;
 	}
 
 	public int getCAPACITY() {
 		return CAPACITY;
 	}
 
-	public Map<Date, Schedule> getTimetable() {
-		return TIMETABLE;
+	public Map<Slot, Event> getTimetable() {
+		return timetable;
 	}
 
-	public void addEvent(Date date, Event event) { 
-		if (TIMETABLE.containsKey(date)) {
-			programmedEvents.put(date, event);
-			// l'évenement serait alors implicitement programmé à l'horaire TIMETABLE.get(date)
+	public void addEvent(Slot slot, Event event) { 
+		if (timetable.containsKey(slot)) {
+			// le créneau existe pour la salle
+			if (timetable.get(slot).equals(null)) {
+				// le créneau est libre
+				if (true) {
+				// vérifier que la date de l'event correspond à la date du slot
+					event.checkDate(slot);
+				timetable.put(slot, event);
+				}
+			}
 		}
+		// lever une exception à chaque cas
 	}
 	
 	

@@ -8,3 +8,4 @@
 
 # Compiled class file
 *.class
+/bin/
