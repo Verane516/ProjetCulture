@@ -3,7 +3,6 @@ package domain;
 import java.util.Calendar;
 import java.util.Objects;
 
-//ValueObject
 public class Concert extends Event {
 	private final Calendar DATE; // (AAAA,MM,JJ)
 	private final String NAME;

@@ -13,7 +13,7 @@ public class Hall {
 	private Map<Slot,Event> timetable; // planning
 	// chaque salle peut ouvrir sur une seule horaire par jour
 	// cette horaire peut varier lors des jours d'ouverture
-	private int id;
+	private int id; //TODO; mettre un UUID (final)
 	private int genId = 0;
 	
 	public Hall(int capacity, Schedule schedule) {
