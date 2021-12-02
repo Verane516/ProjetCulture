@@ -22,6 +22,7 @@ public class Concert extends Event {
 		return this.NAME;
 	}
 
+	// la classe ConcertTest explique comment on récupère les champs du Calendar
 	@Override
 	public boolean checkDate(Slot slot) {
 		if (DATE.YEAR == slot.getSTART_DATE().YEAR) {
@@ -35,4 +36,7 @@ public class Concert extends Event {
 		
 		return false;
 	}
+	
+	// redéfinir equals et hashCode pour avoir une égalité de valeurs
+	
 }

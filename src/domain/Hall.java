@@ -6,17 +6,22 @@ import java.util.Map;
 
 
 
-// Aggregate car une salle est définie par sa programmation qui est ammenée à changer
+// Agregate car une salle est définie par sa programmation qui est ammenée à changer
+
+// TODO: Après réflexion peut être que Hall est aussi un entity
+// la programmations des salles serait alors l'agregate, l'objet qu'on manipule via l'interface
 public class Hall {
 	private final int CAPACITY;
 	private Map<Slot,Event> timetable; // planning
 	// chaque salle peut ouvrir sur une seule horaire par jour
 	// cette horaire peut varier lors des jours d'ouverture
-
+	private int id;
+	private int genId = 0;
 	
 	public Hall(int capacity, Schedule schedule) {
 		this.CAPACITY = capacity;
 		this.timetable = Hall.generateTimetable(schedule);
+		this.id = genId++;
 	}
 
 	private static Map<Slot, Event> generateTimetable(Schedule schedule) {
@@ -32,6 +37,10 @@ public class Hall {
 
 	public int getCAPACITY() {
 		return CAPACITY;
+	}
+	
+	public int getId() {
+		return id;
 	}
 
 	public Map<Slot, Event> getTimetable() {
