@@ -18,4 +18,12 @@ public abstract class Event { // utile pour faire du polymorphisme et factoriser
 	}
 	
 	public abstract boolean checkDate(Slot slot);
+
+	@Override
+	public abstract int hashCode();
+
+	@Override
+	public abstract boolean equals(Object obj);
+	
+	
 }

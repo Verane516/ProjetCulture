@@ -4,11 +4,9 @@ import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
 
-
-
 // Agregate car une salle est définie par sa programmation qui est ammenée à changer
-
 // TODO: Après réflexion peut être que Hall est aussi un entity
+
 // la programmations des salles serait alors l'agregate, l'objet qu'on manipule via l'interface
 public class Hall {
 	private final int CAPACITY;
