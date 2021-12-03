@@ -1,7 +1,7 @@
 package domain;
 
 import java.util.HashSet;
-// import java.util.UUID;
+import java.util.UUID;
 
 /*
 - Les attributs/propriétés n’ont pas de setter.
@@ -13,9 +13,20 @@ import java.util.HashSet;
 // Aggregate à priori
 public class Schedule extends HashSet<Slot>{
 	
-	// private final UUID ID;
+	private final UUID ID;
 
 	// generated automatically, just to suppress warnings
 	private static final long serialVersionUID = -1741988041674567258L;
+	
+	public Schedule() {
+		this.ID = UUID.randomUUID();
+	}
+
+	public UUID getID() {
+		return ID;
+	}
+	
+	
+	
 	// vérification qu'il n'y a pas de superposition de créneaux si on a le temps
 }
