@@ -21,7 +21,6 @@ public class Concert extends Event {
 		return this.NAME;
 	}
 
-	// la classe ConcertTest explique comment on récupère les champs du Calendar
 	@Override
 	public boolean checkDate(Slot slot) {
 		if (this.DATE.get(Calendar.YEAR) == slot.getSTART_DATE().get(Calendar.YEAR)) {

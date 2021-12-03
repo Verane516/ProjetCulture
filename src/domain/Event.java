@@ -1,7 +1,5 @@
 package domain;
 
-// https://youtu.be/il7eVsDPFoA?t=415
-// https://mkyong.com/java/java-date-and-calendar-examples/ - Example 2.2
 
 // Value Object
 public abstract class Event { // utile pour faire du polymorphisme et factoriser la capacité
