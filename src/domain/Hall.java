@@ -4,13 +4,10 @@ import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
 
-// Agregate car une salle est définie par sa programmation qui est ammenée à changer
-// TODO: Après réflexion peut être que Hall est aussi un entity
-
-// la programmations des salles serait alors l'agregate, l'objet qu'on manipule via l'interface
+// Entity
 public class Hall {
 	private final int CAPACITY;
-	private Map<Slot,Event> timetable; // planning
+	private Map<Slot,Event> timetable; // planning de la salle
 	// chaque salle peut ouvrir sur une seule horaire par jour
 	// cette horaire peut varier lors des jours d'ouverture
 	private int id; //TODO; mettre un UUID (final)
