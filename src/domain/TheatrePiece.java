@@ -1,6 +1,7 @@
 package domain;
 
 import java.util.Calendar;
+import java.util.Objects;
 
 public class TheatrePiece extends Event {
 
@@ -30,11 +31,21 @@ public class TheatrePiece extends Event {
 		return TITLE;
 	}
 
+	// TODO: faire un schéma pour expliquer comment on gère les vérifications de date et le mettre dans le rapport !
+	// TODO: Idée : on gère les date avec des timestamp (secondes écoulées depuis une certaine date) pour pas se prendre la tête
 	@Override
 	public boolean checkDate(Slot slot) {
-		if ((START_DATE.YEAR == slot.getSTART_DATE().YEAR) || (END_DATE.YEAR == slot.getEND_DATE().YEAR) ) {
-			if ((slot.getSTART_DATE().MONTH >= START_DATE.MONTH) && (slot.getEND_DATE().MONTH <= END_DATE.MONTH)) {
-				if ((slot.getSTART_DATE().DAY_OF_MONTH >= START_DATE.DAY_OF_MONTH) && (slot.getEND_DATE().DAY_OF_MONTH <= END_DATE.DAY_OF_MONTH) ) {
+		// Si l'année de la date de début de la pièce est égale à l'année de la date de début du créneau
+		// ou que l'année de la date de fin de la pièce est égale à l'année de la date de fin du créneau (?)
+		if ((START_DATE.get(Calendar.YEAR) == slot.getSTART_DATE().get(Calendar.YEAR)) || (END_DATE.get(Calendar.YEAR) == slot.getEND_DATE().get(Calendar.YEAR))) {
+			// Si le mois de la date de début du créneau est supérieure ou égale au mois de la date de début de la pièce
+			// et que le mois de la date de fin du créneau est inférieur ou égal au mois de la date de fin de la pièce
+			// TODO: ça me semble faux : à vérifier
+			if ((slot.getSTART_DATE().get(Calendar.MONTH) >= START_DATE.get(Calendar.MONTH)) && (slot.getEND_DATE().get(Calendar.MONTH) <= END_DATE.get(Calendar.MONTH))) {
+				// si le jour de la date de début du créneau est supérieur ou égal au jour de la date de début de la pièce
+				// et que le jour de la date de fin du créneau est inférieur ou égale au jour de la date de fin de la la pièce
+				// TODO: je pense que tu as inversé les inégalités
+				if ((slot.getSTART_DATE().get(Calendar.DAY_OF_MONTH) >= START_DATE.get(Calendar.DAY_OF_MONTH)) && (slot.getEND_DATE().get(Calendar.DAY_OF_MONTH) <= END_DATE.get(Calendar.DAY_OF_MONTH))) {
 					return true;
 				}
 			}
@@ -42,4 +53,25 @@ public class TheatrePiece extends Event {
 		}
 		return false;
 	}
+
+	@Override
+	public int hashCode() {
+		return Objects.hash(END_DATE, START_DATE, TITLE);
+	}
+
+	// on veut une égalité de valeurs
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		TheatrePiece other = (TheatrePiece) obj;
+		return Objects.equals(END_DATE, other.END_DATE) && Objects.equals(START_DATE, other.START_DATE)
+				&& Objects.equals(TITLE, other.TITLE);
+	}
+	
+	
 }

@@ -1,10 +1,11 @@
 package domain;
 
-// structure du cours, à modifier
-public class HallRepository {
-	
-	
-	public Hall findHallById(int hallId) {
+// import java.util.Map;
+
+// TODO: on garde le schedule pas les salles du coup
+public interface HallRepository {
+		
+	/*public Hall findHallById(int hallId) {
 		//lire les données sauvegardées
 		data = File.read();
 		
@@ -27,5 +28,5 @@ public class HallRepository {
 	
 public void update (Hall h) {
 		
-	}
+	}*/
 }

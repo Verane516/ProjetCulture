@@ -1,7 +1,8 @@
-package domain;
+package infra;
 
 import java.util.HashSet;
 import java.util.Set;
+import domain.Hall;
 
 //structure du cours, à modifier
 public class HallRepositoryInMemory {
