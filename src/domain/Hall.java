@@ -42,21 +42,14 @@ public class Hall {
 		return timetable;
 	}
 
-	public void addEvent(Slot slot, Event event) { 
-		if (timetable.containsKey(slot)) {
-			// le créneau existe pour la salle
-			if (timetable.get(slot).equals(null)) {
-				// le créneau est libre
-				if (true) {
-				// vérifier que la date de l'event correspond à la date du slot
-					event.checkDate(slot);
-				timetable.put(slot, event);
-				}
-			}
-		}
-		// lever une exception à chaque cas
-	}
-	
+	/*
+	 * public void addEvent(Slot slot, Event event) { if
+	 * (timetable.containsKey(slot)) { // le créneau existe pour la salle if
+	 * (timetable.get(slot).equals(null)) { // le créneau est libre if (true) { //
+	 * vérifier que la date de l'event correspond à la date du slot
+	 * event.checkDate(slot); timetable.put(slot, event); } } } // lever une
+	 * exception à chaque cas }
+	 */
 	
 	
 }

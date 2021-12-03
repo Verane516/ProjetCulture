@@ -26,5 +26,6 @@ public class Schedule extends HashSet<Slot>{
 		return ID;
 	}
 	
+	
 	// vérification qu'il n'y a pas de superposition de créneaux si on a le temps
 }
