@@ -7,8 +7,8 @@ import domain.Schedule;
 import domain.ScheduleRepository;
 import java.util.UUID;
 
-public class ScheduleRepositoryInMemory implements ScheduleRepository{
-
+public class ScheduleRepositoryInMemory implements ScheduleRepository {
+	
 	Map<UUID, Schedule> repoInMemory;
 	
 	public ScheduleRepositoryInMemory(){
@@ -27,6 +27,7 @@ public class ScheduleRepositoryInMemory implements ScheduleRepository{
 	public void save(Schedule schedule) {
 		repoInMemory.put(schedule.getID(), schedule);
 	}
+	
 	
 	
 }

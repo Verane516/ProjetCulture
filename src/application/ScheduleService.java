@@ -4,5 +4,6 @@ package application;
 
 public class ScheduleService {
 	
-	// ajouter un événement au planning d'une salle pour le planning considéré	
+	// ajouter un événement au planning d'une salle pour le planning considéré
+	
 }

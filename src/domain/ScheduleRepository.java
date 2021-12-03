@@ -2,6 +2,7 @@ package domain;
 
 import java.util.UUID;
 
+
 public interface ScheduleRepository {
 		
 	public Schedule load(UUID id);
@@ -10,5 +11,4 @@ public interface ScheduleRepository {
 	
 	public void save(Schedule schedule);	
 	// sauvegarder les données
-	
 }

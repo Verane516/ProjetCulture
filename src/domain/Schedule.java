@@ -10,7 +10,7 @@ import java.util.UUID;
 - Ne pas oublier de structurer l’Agregate grâce aux Value Objects pour diminuer la taille de l’Agregate.
 */
 
-// Aggregate à priori
+// Aggregate
 public class Schedule extends HashSet<Slot>{
 	
 	private final UUID ID;
@@ -25,8 +25,6 @@ public class Schedule extends HashSet<Slot>{
 	public UUID getID() {
 		return ID;
 	}
-	
-	
 	
 	// vérification qu'il n'y a pas de superposition de créneaux si on a le temps
 }
