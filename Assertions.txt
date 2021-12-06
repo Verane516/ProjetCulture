@@ -1,6 +1,2 @@
-Les salles ne connaissent leur programmation détaillée ou seulement les évenements qui leurs sont alloués ?
-Schedule gère l'affectation des évenements à des salles sur des créneaux particuliers :
-Schedule ne peut pas juste être une liste de salles ou de créneaux, il faut qu'il prennent en compte à la fois les salles, les évenements et les créneaux.
 
-J'ai demandé à Martin comment il implémentait tout ça, j'attends sa réponse.
 

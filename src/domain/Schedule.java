@@ -2,10 +2,9 @@ package domain;
 
 import java.util.Calendar;
 import java.util.HashMap;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
-import java.util.Set;
+import java.util.Map.Entry;
 import java.util.UUID;
 
 /*
@@ -33,36 +32,6 @@ public class Schedule {
 		List<Slot> slots = this.getHall(event).getHoursList();
 		
 	}*/
-	
-	public Hall chooseHall(Event event) {
-		for (int i=0; i <halls.size(); i++) {
-			List<Slot> slots = h.getHoursList();
-			for (Slot s : slots) {
-				if (event instanceof Concert) {
-					if(!checkWeekHasConcert(h, ((Concert)event))) { // si la salle n'a pas de concert cette semaine
-						if (((Concert) event).checkDate(s)) {
-							timetable.put(event, h);
-							return h;
-						}
-					}
-				}
-				if (event instanceof TheatrePiece) {
-					//Calendar dateProg = ((TheatrePiece) event).getStartDate();
-					if (((TheatrePiece) event).checkDate(s)) {
-						timetable.put(event, h);
-						return h;
-					}
-				}
-			}
-			System.err.println("Pas de salle compatible");
-			return null;
-		}
-		if (i == halls.size()) {
-			
-		}
-	}
-	
-	
 	
 	public Hall chooseHall(Event event) {
 		if (event instanceof Concert) {
@@ -104,10 +73,9 @@ public class Schedule {
 					}
 				}
 			}
-			System.err.println("Pas de salle compatible");
-			return null;
 		}
-	
+		System.err.println("Pas de salle compatible");
+		return null;
 	}
 	
 	public boolean allHallsHaveConcert(Concert concert) {
@@ -122,42 +90,20 @@ public class Schedule {
 	//avec vérification 1 concert par semaine
 	public boolean checkWeekHasConcert(Hall h, Concert concert) {
 		Calendar c = concert.getDate();
-		int numWeek = c.get(Calendar.WEEK_OF_YEAR);		
-		List<Event> events = (List<Event>) timetable.get(h);
-		for (Event e:events) {
-			if (e instanceof Concert) {
-				if(((Concert)e).getDate().get(Calendar.WEEK_OF_YEAR) == numWeek) {
-					return true;
+		int numWeek = c.get(Calendar.WEEK_OF_YEAR);
+		Event e;
+		for (Entry<Event, Hall> pair : timetable.entrySet()) {
+		    if (pair.getValue().equals(h)) { // on teste si les deux objets sont identiques ici
+		    	e = pair.getKey();
+		    	if (e instanceof Concert) {
+					if(((Concert)e).getDate().get(Calendar.WEEK_OF_YEAR) == numWeek) {
+						return true;
+					}
 				}
-			}
+		    }
 		}
 		return false;	
 	}
-	
-	
-	/*public Hall chooseHall(Event event) {
-		for (Hall h: halls) {
-			List<Slot> slots = h.getHoursList();
-			for (Slot s : slots) {
-				if (event instanceof Concert) {
-					//Calendar dateProg = ((Concert) event).getDate();
-					if (((Concert) event).checkDate(s)) {
-						timetable.put(event, h);
-						return h;
-					}
-				}
-				if (event instanceof TheatrePiece) {
-					//Calendar dateProg = ((TheatrePiece) event).getStartDate();
-					if (((TheatrePiece) event).checkDate(s)) {
-						timetable.put(event, h);
-						return h;
-					}
-				}
-			}
-			System.err.println("Pas de salle compatible");
-			return null;
-		}
-	}*/
 	
 	public Schedule() {
 		this.timetable = new HashMap<Event, Hall>();
@@ -171,22 +117,4 @@ public class Schedule {
 	public boolean checkCapacity(Event event, Hall hall) {
 		return event.getDesiredCapacity() >= hall.getCAPACITY();
 	}
-
-	
-	private static Map<Slot, Event> generateTimetable(List<Slot> hoursList) {
-		Map<Slot, Event> timetable = new HashMap<Slot, Event>();
-	    Iterator<Slot> it = hoursList.iterator();
-	    Slot s;
-	    while (it.hasNext()) {
-	    	s = it.next();
-	    	timetable.put(s, null);
-	    }
-		return timetable;
-	}
-	
-	public Map<Event, Hall> getTimetable() {
-		return timetable;
-	}
-	
-	// vérification qu'il n'y a pas de superposition de créneaux si on a le temps
 }
