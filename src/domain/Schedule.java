@@ -159,7 +159,6 @@ public class Schedule {
 		}
 	}*/
 	
-	
 	public Schedule() {
 		this.timetable = new HashMap<Event, Hall>();
 		this.ID = UUID.randomUUID();
@@ -167,6 +166,10 @@ public class Schedule {
 
 	public UUID getID() {
 		return ID;
+	}
+	
+	public boolean checkCapacity(Event event, Hall hall) {
+		return event.getDesiredCapacity() >= hall.getCAPACITY();
 	}
 
 	
