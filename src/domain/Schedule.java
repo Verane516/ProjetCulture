@@ -1,9 +1,11 @@
 package domain;
 
+import java.util.Calendar;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 import java.util.UUID;
 
 /*
@@ -14,13 +16,151 @@ import java.util.UUID;
 */
 
 // Aggregate
-public class Schedule{
+public class Schedule {
 	
 	private final UUID ID;
-	private Map<Slot,Event> timetable;
 	
-	public Schedule(Hall hall) {
-		this.timetable = Schedule.generateTimetable(hall.getHoursList());
+	private Map<Event, Hall> timetable; // on affecte chaque évenement à une salle
+	// dans chaque salle on affecte l'évenement à un créneau
+	
+	private List<Hall> halls; // un élément par salle, problème : on peut en théorie affecter un event 2 fois
+	
+	public Hall getHall(Event event) {
+		return timetable.get(event);
+	}
+	
+	/*public Slot getSlot(Event event) {
+		List<Slot> slots = this.getHall(event).getHoursList();
+		
+	}*/
+	
+	public Hall chooseHall(Event event) {
+		for (int i=0; i <halls.size(); i++) {
+			List<Slot> slots = h.getHoursList();
+			for (Slot s : slots) {
+				if (event instanceof Concert) {
+					if(!checkWeekHasConcert(h, ((Concert)event))) { // si la salle n'a pas de concert cette semaine
+						if (((Concert) event).checkDate(s)) {
+							timetable.put(event, h);
+							return h;
+						}
+					}
+				}
+				if (event instanceof TheatrePiece) {
+					//Calendar dateProg = ((TheatrePiece) event).getStartDate();
+					if (((TheatrePiece) event).checkDate(s)) {
+						timetable.put(event, h);
+						return h;
+					}
+				}
+			}
+			System.err.println("Pas de salle compatible");
+			return null;
+		}
+		if (i == halls.size()) {
+			
+		}
+	}
+	
+	
+	
+	public Hall chooseHall(Event event) {
+		if (event instanceof Concert) {
+			if (allHallsHaveConcert((Concert) event)) {
+				for (Hall h:halls) {
+					List<Slot> slots = h.getHoursList();
+					for (Slot s : slots) {
+						if (((Concert) event).checkDate(s)) {
+							timetable.put(event, h);
+							return h;
+						}
+					}
+				}
+			}else {
+				for (Hall h:halls) {
+					List<Slot> slots = h.getHoursList();
+					for (Slot s : slots) {
+						if (event instanceof Concert) {
+							if(!checkWeekHasConcert(h, ((Concert)event))) { // si la salle n'a pas de concert cette semaine
+								if (((Concert) event).checkDate(s)) {
+									timetable.put(event, h);
+									return h;
+								}
+							}
+						}
+					}
+				}
+			}
+		}
+
+		if (event instanceof TheatrePiece) {
+			for (Hall h:halls) {
+				List<Slot> slots = h.getHoursList();
+				for (Slot s : slots) {
+					//Calendar dateProg = ((TheatrePiece) event).getStartDate();
+					if (((TheatrePiece) event).checkDate(s)) {
+						timetable.put(event, h);
+						return h;
+					}
+				}
+			}
+			System.err.println("Pas de salle compatible");
+			return null;
+		}
+	
+	}
+	
+	public boolean allHallsHaveConcert(Concert concert) {
+		for (Hall h:halls) {
+			if(!checkWeekHasConcert(h, concert)) {
+				return false;
+			}
+		}
+		return true;
+	}
+	
+	//avec vérification 1 concert par semaine
+	public boolean checkWeekHasConcert(Hall h, Concert concert) {
+		Calendar c = concert.getDate();
+		int numWeek = c.get(Calendar.WEEK_OF_YEAR);		
+		List<Event> events = (List<Event>) timetable.get(h);
+		for (Event e:events) {
+			if (e instanceof Concert) {
+				if(((Concert)e).getDate().get(Calendar.WEEK_OF_YEAR) == numWeek) {
+					return true;
+				}
+			}
+		}
+		return false;	
+	}
+	
+	
+	/*public Hall chooseHall(Event event) {
+		for (Hall h: halls) {
+			List<Slot> slots = h.getHoursList();
+			for (Slot s : slots) {
+				if (event instanceof Concert) {
+					//Calendar dateProg = ((Concert) event).getDate();
+					if (((Concert) event).checkDate(s)) {
+						timetable.put(event, h);
+						return h;
+					}
+				}
+				if (event instanceof TheatrePiece) {
+					//Calendar dateProg = ((TheatrePiece) event).getStartDate();
+					if (((TheatrePiece) event).checkDate(s)) {
+						timetable.put(event, h);
+						return h;
+					}
+				}
+			}
+			System.err.println("Pas de salle compatible");
+			return null;
+		}
+	}*/
+	
+	public Schedule() {
+		this.timetable = new HashMap<Event, Hall>();
 		this.ID = UUID.randomUUID();
 	}
 
@@ -44,7 +184,7 @@ public class Schedule{
 		return timetable;
 	}
 	
-	public Map<Slot,Event> getTimetable() {
+	public Map<Event, Hall> getTimetable() {
 		return timetable;
 	}
 	

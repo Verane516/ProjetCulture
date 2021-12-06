@@ -1,11 +1,16 @@
 package domain;
 
 import java.util.ArrayList;
+import java.util.List;
+
+import java.util.UUID;
+/*
+import java.util.Map;
 import java.util.HashMap;
 import java.util.Iterator;
-import java.util.List;
-import java.util.Map;
-import java.util.UUID;
+*/
+
+
 
 // Entity
 public class Hall {
@@ -16,6 +21,8 @@ public class Hall {
 	private final UUID ID;
 	private List<Event> programmedEvent; //liste des événements programmés
 	private List<Slot> hoursList; //liste des horaires, l'heure d'ouverture est incluse dans la liste des créneaux disponibles
+	/*Map <Calendar,Hour> hoursListV2;
+	Map <Calendar,Event> programmedEventV2;*/
 	
 	/*public Hall(int capacity, Schedule schedule) {
 		this.CAPACITY = capacity;
