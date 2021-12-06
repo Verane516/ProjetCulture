@@ -1,7 +1,6 @@
 package domain;
 
 import java.util.HashMap;
-import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
@@ -15,16 +14,24 @@ import java.util.UUID;
 */
 
 // Aggregate
-public class Schedule extends HashSet<Slot>{
+public class Schedule {
 	
 	private final UUID ID;
-	private Map<Slot,Event> timetable;
-
-	// generated automatically, just to suppress warnings
-	private static final long serialVersionUID = -1741988041674567258L;
+	
+	private Map<Slot,Event> timetable; // si plusieurs salles ouvrent sur un même créneau ça ne va pas
+	
+	// private List<Map<Event,Slot>> planning; // un élément par salle, problème : on peut en théorie affecter un event 2 fois
+	
+	// private Map<Event, Hall> affectation; // on affecte chaque évenement à une salle
+	// dans chaque salle on affecte l'évenement à un créneau
 	
 	public Schedule(Hall hall) {
 		this.timetable = Schedule.generateTimetable(hall.getHoursList());
+		this.ID = UUID.randomUUID();
+	}
+	
+	public Schedule() {
+		this.timetable = new HashMap<Slot,Event>();
 		this.ID = UUID.randomUUID();
 	}
 
