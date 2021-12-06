@@ -15,6 +15,7 @@ public abstract class Event { // utile pour faire du polymorphisme et factoriser
 		return this.DESIRED_CAPACITY;
 	}
 	
+	
 	public abstract boolean checkDate(Slot slot);
 
 	@Override
