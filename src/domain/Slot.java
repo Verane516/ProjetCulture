@@ -6,8 +6,8 @@ import java.util.Objects;
 // value object
 public class Slot {
 
-	private final Calendar START_DATE;
-	private final Calendar END_DATE;
+	private final Calendar START_DATE; // date et heure
+	private final Calendar END_DATE; // date et heure
 	
 	public Slot(Calendar sD, Calendar eD) {
 		this.START_DATE = sD;

@@ -19,6 +19,8 @@ public class Hall {
 	private int genId = 0;
 	private List<Event> programmedEvent; //liste des événements programmés
 	private List<Slot> hoursList; //liste des horaires, l'heure d'ouverture est incluse dans la liste des créneaux disponibles
+	/*Map <Calendar,Hour> hoursListV2;
+	Map <Calendar,Event> programmedEventV2;*/
 	
 	/*public Hall(int capacity, Schedule schedule) {
 		this.CAPACITY = capacity;

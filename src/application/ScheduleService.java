@@ -15,7 +15,7 @@ public class ScheduleService {
 				// le créneau est libre
 				// vérifier que la date de l'event correspond à la date du slot
 				if (event.checkDate(slot) == true) {
-					schedule.getTimetable().put(slot, event);
+					schedule.getTimetable().put(event);
 					hall.getProgrammedEvent().add(event);
 					hall.getHoursList().remove(slot);
 				}else {
