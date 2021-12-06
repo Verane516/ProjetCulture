@@ -5,6 +5,7 @@ import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
+import java.util.UUID;
 
 // Entity
 public class Hall {
@@ -12,8 +13,7 @@ public class Hall {
 	//private Map<Slot,Event> timetable; // planning de la salle
 	
 	
-	private int id; //TODO; mettre un UUID (final)
-	private int genId = 0;
+	private final UUID ID;
 	private List<Event> programmedEvent; //liste des événements programmés
 	private List<Slot> hoursList; //liste des horaires, l'heure d'ouverture est incluse dans la liste des créneaux disponibles
 	
@@ -29,7 +29,7 @@ public class Hall {
 		this.CAPACITY = capacity;
 		this.programmedEvent = new ArrayList<Event>();
 		this.hoursList = hoursList;
-		this.id = genId++;
+		this.ID = UUID.randomUUID();
 	}
 	
 
@@ -49,8 +49,8 @@ public class Hall {
 		return CAPACITY;
 	}
 	
-	public int getId() {
-		return id;
+	public UUID getID() {
+		return ID;
 	}
 
 	/*public Map<Slot,Event> getTimetable() {

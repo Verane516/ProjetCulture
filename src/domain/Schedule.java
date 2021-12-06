@@ -1,7 +1,6 @@
 package domain;
 
 import java.util.HashMap;
-import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
@@ -15,13 +14,10 @@ import java.util.UUID;
 */
 
 // Aggregate
-public class Schedule extends HashSet<Slot>{
+public class Schedule{
 	
 	private final UUID ID;
 	private Map<Slot,Event> timetable;
-
-	// generated automatically, just to suppress warnings
-	private static final long serialVersionUID = -1741988041674567258L;
 	
 	public Schedule(Hall hall) {
 		this.timetable = Schedule.generateTimetable(hall.getHoursList());
@@ -30,6 +26,10 @@ public class Schedule extends HashSet<Slot>{
 
 	public UUID getID() {
 		return ID;
+	}
+	
+	public boolean checkCapacity(Event event, Hall hall) {
+		return event.getDesiredCapacity() >= hall.getCAPACITY();
 	}
 
 	
