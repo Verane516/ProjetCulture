@@ -2,54 +2,37 @@ package domain;
 
 import java.util.ArrayList;
 import java.util.List;
-
-import java.util.UUID;
-/*
 import java.util.Map;
+import java.util.Objects;
+import java.util.UUID;
 import java.util.HashMap;
-import java.util.Iterator;
-*/
-
-
 
 // Entity
 public class Hall {
-	private final int CAPACITY;
-	//private Map<Slot,Event> timetable; // planning de la salle
-	
-	
 	private final UUID ID;
-	private List<Event> programmedEvent; //liste des événements programmés
-	private List<Slot> hoursList; //liste des horaires, l'heure d'ouverture est incluse dans la liste des créneaux disponibles
-	/*Map <Calendar,Hour> hoursListV2;
-	Map <Calendar,Event> programmedEventV2;*/
+	private final int CAPACITY;
 	
-	/*public Hall(int capacity, Schedule schedule) {
-		this.CAPACITY = capacity;
-		this.timetable = Hall.generateTimetable(schedule);
-		this.id = genId++;
-	}
-	*/
-	
+	private final List<Slot> hoursList; //liste des horaires, l'heure d'ouverture est incluse dans la liste des créneaux disponibles
+	private List<Event> programmedEvents; //liste des événements programmés
+	private Map<Slot,Event> timetable; // affectation des créneaux
 	
 	public Hall(int capacity, List<Slot> hoursList) {
 		this.CAPACITY = capacity;
-		this.programmedEvent = new ArrayList<Event>();
 		this.hoursList = hoursList;
 		this.ID = UUID.randomUUID();
+		this.programmedEvents = new ArrayList<Event>();
+		this.timetable = new HashMap<Slot, Event>();
 	}
 	
-
-	/*private static Map<Slot, Event> generateTimetable(List<Slot> hoursList) {
-		Map<Slot, Event> timetable = new HashMap<Slot, Event>();
-	    Iterator<Slot> it = hoursList.iterator();
-	    Slot s;
-	    while (it.hasNext()) {
-	    	s = it.next();
-	    	timetable.put(s, null);
-	    }
+	public void updateTimetable() {
+		// pour tous les évenements affectés à la salle
+		// si un créneau convient pour l'événement, on associe le créneau à l'évenement
+		// on peut affecter plusieurs créneaux à une pièce de théatre
+	}
+	
+	public Map<Slot,Event> getTimetable() {
 		return timetable;
-	}*/
+	}
 	
 
 	public int getCAPACITY() {
@@ -59,19 +42,34 @@ public class Hall {
 	public UUID getID() {
 		return ID;
 	}
-
-	/*public Map<Slot,Event> getTimetable() {
-		return timetable;
-	}*/
-	
-	
 	
 	public List<Event> getProgrammedEvent(){
-		return programmedEvent;
+		return programmedEvents;
 	}
 
 	public List<Slot> getHoursList(){
 		return hoursList;
 	}
+
+
+	@Override
+	public int hashCode() {
+		return Objects.hash(ID);
+	}
+
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		Hall other = (Hall) obj;
+		return Objects.equals(ID, other.ID);
+	}
+	
+	
 	
 }

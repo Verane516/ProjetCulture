@@ -3,13 +3,16 @@ package application;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.GregorianCalendar;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 import domain.Concert;
 import domain.Event;
 import domain.Slot;
 import domain.TheatrePiece;
 import domain.Hall;
+import domain.Schedule;
 
 public class DataSetTest {
 	
@@ -158,7 +161,7 @@ public class DataSetTest {
 		final int MEDIUM_CAPACITY = 100; // capacité suffisante pour les petits événements, mais pas pour les gros;
 		final int BIG_CAPACITY = 1500; // capacité suffisante pour tous les événements;
 		
-		List<Hall> halls = new ArrayList<Hall>();
+		Set<Hall> halls = new HashSet<Hall>();
 		
 		Hall smallHall = new Hall(LOW_CAPACITY, slots1);
 		halls.add(smallHall);
@@ -171,6 +174,11 @@ public class DataSetTest {
 		
 		Hall hallWith2EndHours = new Hall(LOW_CAPACITY, slots4);
 		halls.add(hallWith2EndHours);
+		
+		Schedule schedule = new Schedule();
+		schedule.addEvents(events);
+		schedule.addHalls(halls);
+		schedule.updateTimetables();
 		
 	}
 

@@ -48,7 +48,8 @@ public class Concert extends Event {
 		if (getClass() != obj.getClass())
 			return false;
 		Concert other = (Concert) obj;
-		return Objects.equals(DATE, other.DATE) && Objects.equals(NAME, other.NAME);
+		return Objects.equals(DATE, other.DATE) && Objects.equals(NAME, other.NAME) 
+				&& Objects.equals(this.getDesiredCapacity(), other.getDesiredCapacity());
 	}
 	
 }
