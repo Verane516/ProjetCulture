@@ -7,7 +7,9 @@ import java.util.List;
 
 import domain.Concert;
 import domain.Event;
+import domain.Slot;
 import domain.TheatrePiece;
+import domain.Hall;
 
 public class DataSetTest {
 	
@@ -33,7 +35,7 @@ public class DataSetTest {
 		
 		// notre jeu de donnée va porter sur le mois de janvier 2022
 		
-		final int YEAR = 2021;
+		final int YEAR = 2022;
 		final int MONTH = 0; // janvier
 		final int DAY_OF_MONTH = 1;
 		
@@ -72,12 +74,10 @@ public class DataSetTest {
 		
 		
 		List<Event> concerts = new ArrayList<Event>();
-		Calendar concertDate;
 		Calendar startDate;
 		
 		for (int i = 0; i <= 30 ; i++) {
-			concertDate = daysOfJanuary.get(i);
-			startDate = (GregorianCalendar)concertDate.clone();
+			startDate = (GregorianCalendar)daysOfJanuary.get(i).clone();
 			startDate.add(Calendar.HOUR, DEFAULT_BEGIN_HOUR);
 			if (i%10 == 0) {
 				concerts.add(new Concert(BIG_EVENT_FACTOR*DEFAULT_CAPACITY, startDate, "concert n" + i));
@@ -91,7 +91,7 @@ public class DataSetTest {
 		// semaine du 3 au 9 janvier
 		Calendar beginDate1 = new GregorianCalendar(YEAR, MONTH, 3);
 		Calendar endDate1 = new GregorianCalendar(YEAR, MONTH, 7);
-		theaterPieces.add(new TheatrePiece(DEFAULT_CAPACITY, beginDate1, endDate1, "Great fight against DDD"));
+		theaterPieces.add(new TheatrePiece(DEFAULT_CAPACITY, beginDate1, endDate1, "How to understand Java"));
 		
 		// semaine du 10 au 16 janvier
 		Calendar beginDate2 = new GregorianCalendar(YEAR, MONTH, 11);
@@ -102,6 +102,75 @@ public class DataSetTest {
 		events.addAll(concerts);
 		events.addAll(theaterPieces);
 		
+		// créneaux :
+		
+		final int BEGIN_HOUR_1 = 19;
+		final int END_HOUR_1 = 21;
+		final int DEFAULT_MINUTES = 0;
+		
+		List<Slot> slots1 = new ArrayList<Slot>();
+		Calendar slotStart;
+		Calendar slotEnd;
+		
+		for (int i = 1; i <= 31 ; i++) {
+			slotStart = new GregorianCalendar(YEAR, MONTH, i, BEGIN_HOUR_1, DEFAULT_MINUTES);
+			slotEnd = new GregorianCalendar(YEAR, MONTH, i, END_HOUR_1, DEFAULT_MINUTES);
+			slots1.add(new Slot(slotStart, slotEnd));
+		}
+		
+		final int BEGIN_HOUR_2 = 18;
+		final int END_HOUR_2 = 22;
+		
+		List<Slot> slots2 = new ArrayList<Slot>();
+		for (int i = 1; i <= 31 ; i++) {
+			slotStart = new GregorianCalendar(YEAR, MONTH, i, BEGIN_HOUR_2, DEFAULT_MINUTES);
+			slotEnd = new GregorianCalendar(YEAR, MONTH, i, END_HOUR_2, DEFAULT_MINUTES);
+			slots2.add(new Slot(slotStart, slotEnd));
+		}
+		
+		// On ne génére pas de créneaux le lundi
+		List<Slot> slots3 = new ArrayList<Slot>();
+		for (int i = 1; i <= 31 ; i++) {
+			slotStart = new GregorianCalendar(YEAR, MONTH, i, BEGIN_HOUR_2, DEFAULT_MINUTES);
+			if (slotStart.get(Calendar.DAY_OF_WEEK) != Calendar.MONDAY) {
+				slotEnd = new GregorianCalendar(YEAR, MONTH, i, END_HOUR_2, DEFAULT_MINUTES);
+				slots3.add(new Slot(slotStart, slotEnd));
+				// System.out.println("DATE: " + slotStart.get(Calendar.DATE));
+			}
+		}
+		// System.out.println("Nombre de créneaux pour la liste de slot 3 : " + slots3.size());
+		// on a bien 26 jours qui ne sont pas des lundis en janvier 2022
+		
+		// On ferme à END_HOUR_2 les samedis et à END_HOUR_1 le reste de la semaine
+		List<Slot> slots4 = new ArrayList<Slot>();
+		for (int i = 1; i <= 31 ; i++) {
+			slotStart = new GregorianCalendar(YEAR, MONTH, i, BEGIN_HOUR_1, DEFAULT_MINUTES);
+			if (slotStart.get(Calendar.DAY_OF_WEEK) == Calendar.SATURDAY) {
+				slotEnd = new GregorianCalendar(YEAR, MONTH, i, END_HOUR_2, DEFAULT_MINUTES);
+			}
+			else {
+				slotEnd = new GregorianCalendar(YEAR, MONTH, i, END_HOUR_1, DEFAULT_MINUTES);
+			}
+		slots4.add(new Slot(slotStart, slotEnd));
+		}
+		
+		final int LOW_CAPACITY = 20; // capacité trop faible pour acceuillir les événements
+		final int MEDIUM_CAPACITY = 100; // capacité suffisante pour les petits événements, mais pas pour les gros;
+		final int BIG_CAPACITY = 1500; // capacité suffisante pour tous les événements;
+		
+		List<Hall> halls = new ArrayList<Hall>();
+		
+		Hall smallHall = new Hall(LOW_CAPACITY, slots1);
+		halls.add(smallHall);
+		
+		Hall bigHall = new Hall(BIG_CAPACITY, slots2);
+		halls.add(bigHall);
+		
+		Hall hallClosedOnMondays = new Hall(MEDIUM_CAPACITY, slots3);
+		halls.add(hallClosedOnMondays);
+		
+		Hall hallWith2EndHours = new Hall(LOW_CAPACITY, slots4);
+		halls.add(hallWith2EndHours);
 		
 	}
 
