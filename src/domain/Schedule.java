@@ -58,6 +58,11 @@ public class Schedule {
 		timetable.put(event, null);
 	}
 	
+	public void updateTimetables() {
+		// on affecte les évenements aux salles puis,
+		// pour toutes les salles, on met à jour leur emploi du temps
+	}
+	
 	public Hall chooseHall(Event event) {
 		if (event instanceof Concert) {
 			if (allHallsHaveConcertThisWeek((Concert) event)) {

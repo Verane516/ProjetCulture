@@ -12,6 +12,7 @@ import domain.Event;
 import domain.Slot;
 import domain.TheatrePiece;
 import domain.Hall;
+import domain.Schedule;
 
 public class DataSetTest {
 	
@@ -173,6 +174,11 @@ public class DataSetTest {
 		
 		Hall hallWith2EndHours = new Hall(LOW_CAPACITY, slots4);
 		halls.add(hallWith2EndHours);
+		
+		Schedule schedule = new Schedule();
+		schedule.addEvents(events);
+		schedule.addHalls(halls);
+		schedule.updateTimetables();
 		
 	}
 
