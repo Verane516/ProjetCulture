@@ -2,7 +2,7 @@ package domain;
 
 import java.util.ArrayList;
 import java.util.List;
-
+import java.util.Objects;
 import java.util.UUID;
 /*
 import java.util.Map;
@@ -73,5 +73,26 @@ public class Hall {
 	public List<Slot> getHoursList(){
 		return hoursList;
 	}
+
+
+	@Override
+	public int hashCode() {
+		return Objects.hash(ID);
+	}
+
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		Hall other = (Hall) obj;
+		return Objects.equals(ID, other.ID);
+	}
+	
+	
 	
 }

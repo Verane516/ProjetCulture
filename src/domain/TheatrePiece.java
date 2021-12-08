@@ -60,7 +60,7 @@ public class TheatrePiece extends Event {
 			return false;
 		TheatrePiece other = (TheatrePiece) obj;
 		return Objects.equals(END_DATE, other.END_DATE) && Objects.equals(START_DATE, other.START_DATE)
-				&& Objects.equals(TITLE, other.TITLE);
+				&& Objects.equals(TITLE, other.TITLE) && Objects.equals(this.getDesiredCapacity(), other.getDesiredCapacity());
 	}
 	
 	

@@ -3,7 +3,9 @@ package application;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.GregorianCalendar;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 import domain.Concert;
 import domain.Event;
@@ -158,7 +160,7 @@ public class DataSetTest {
 		final int MEDIUM_CAPACITY = 100; // capacité suffisante pour les petits événements, mais pas pour les gros;
 		final int BIG_CAPACITY = 1500; // capacité suffisante pour tous les événements;
 		
-		List<Hall> halls = new ArrayList<Hall>();
+		Set<Hall> halls = new HashSet<Hall>();
 		
 		Hall smallHall = new Hall(LOW_CAPACITY, slots1);
 		halls.add(smallHall);
