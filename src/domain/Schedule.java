@@ -24,14 +24,18 @@ public class Schedule {
 	
 	private List<Hall> halls; // un élément par salle, problème : on peut en théorie affecter un event 2 fois
 	
+	public Schedule() {
+		this.timetable = new HashMap<Event, Hall>(); // TODO: remplir cette map avec la liste des évenements
+		this.ID = UUID.randomUUID();
+	}
+
+	public UUID getID() {
+		return ID;
+	}
+	
 	public Hall getHall(Event event) {
 		return timetable.get(event);
 	}
-	
-	/*public Slot getSlot(Event event) {
-		List<Slot> slots = this.getHall(event).getHoursList();
-		
-	}*/
 	
 	public Hall chooseHall(Event event) {
 		if (event instanceof Concert) {
@@ -103,15 +107,6 @@ public class Schedule {
 		    }
 		}
 		return false;	
-	}
-	
-	public Schedule() {
-		this.timetable = new HashMap<Event, Hall>();
-		this.ID = UUID.randomUUID();
-	}
-
-	public UUID getID() {
-		return ID;
 	}
 	
 	public boolean checkCapacity(Event event, Hall hall) {
