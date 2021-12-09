@@ -65,7 +65,7 @@ public class TheatrePiece extends Event {
 
 	@Override
 	public String toString() {
-		return "TheatrePiece [TITLE=" + TITLE + /*", START_DATE=" + START_DATE + ", END_DATE=" + END_DATE +*/ "]";
+		return "TheatrePiece [TITLE=" + TITLE + ", START_DATE=" + START_DATE + ", END_DATE=" + END_DATE + ", CAPACITY=" + this.getDesiredCapacity() + "]";
 	}
 	
 	

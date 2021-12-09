@@ -50,12 +50,15 @@ public class DataSetTest implements CalendarPrint {
 		// CalendarPrint.getSomeInfo(daysOfJanuary.get(30)); // 31-ième jour de janvier
 		
 		// Supposons :
-		// - il y a un concert par jour
+		// - il y a deux concerts moyen par jour
+		// - tous les 10 jours il y a un gros concert
+		// - tous les 2 jours il y a un petit concert
 		// - chaque concert peut acceuillir 50 personnes, tous les 10 jours il y a un gros concert
 		// - les concerts débutent à 18h
 		
-		final int DEFAULT_CAPACITY = 50;
-		final int BIG_EVENT_FACTOR = 20;
+		final int BIG_EVENT = 500;
+		final int MEDIUM_EVENT = 80;
+		final int SMALL_EVENT = 10;
 		int DEFAULT_BEGIN_HOUR = 18;
 		
 		
@@ -65,24 +68,31 @@ public class DataSetTest implements CalendarPrint {
 		for (int i = 0; i <= 30 ; i++) {
 			startDate = (GregorianCalendar)daysOfJanuary.get(i).clone();
 			startDate.add(Calendar.HOUR, DEFAULT_BEGIN_HOUR);
-			if (i%10 == 0) {
-				concerts.add(new Concert(BIG_EVENT_FACTOR*DEFAULT_CAPACITY, startDate, "concert n" + i));
+			concerts.add(new Concert(MEDIUM_EVENT, startDate, "medium concert"));
+			concerts.add(new Concert(MEDIUM_EVENT, startDate, "medium concert 2"));
+			if (i%2 == 0) {
+				concerts.add(new Concert(SMALL_EVENT, startDate, "small concert "));
 			}
-			else {
-				concerts.add(new Concert(DEFAULT_CAPACITY, startDate, "concert n" + i));
+			if (i%10 == 0) {
+				concerts.add(new Concert(BIG_EVENT, startDate, "big concert"));
 			}
 		}
+		
+		Calendar dateOfTheHudgeConcert = new GregorianCalendar(YEAR, MONTH, 15);
+		concerts.add(new Concert(10000, dateOfTheHudgeConcert, "Amazing concert too big for halls"));
+		
+		// On remarque qu'en exécutant plusieurs fois le programme on obtient pas les mêmes résultats
 		
 		List<Event> theaterPieces = new ArrayList<Event>();
 		// semaine du 3 au 9 janvier
 		Calendar beginDate1 = new GregorianCalendar(YEAR, MONTH, 3);
 		Calendar endDate1 = new GregorianCalendar(YEAR, MONTH, 7);
-		theaterPieces.add(new TheatrePiece(DEFAULT_CAPACITY, beginDate1, endDate1, "How to understand Java"));
+		theaterPieces.add(new TheatrePiece(MEDIUM_EVENT, beginDate1, endDate1, "How to understand Java"));
 		
 		// semaine du 10 au 16 janvier
 		Calendar beginDate2 = new GregorianCalendar(YEAR, MONTH, 11);
 		Calendar endDate2 = new GregorianCalendar(YEAR, MONTH, 12);
-		theaterPieces.add(new TheatrePiece(BIG_EVENT_FACTOR*DEFAULT_CAPACITY, beginDate2, endDate2, "Theater piece n2"));
+		theaterPieces.add(new TheatrePiece(BIG_EVENT, beginDate2, endDate2, "Theater piece n2"));
 		
 		List<Event> events = new ArrayList<Event>();
 		events.addAll(concerts);
@@ -155,7 +165,7 @@ public class DataSetTest implements CalendarPrint {
 		Hall hallClosedOnMondays = new Hall(MEDIUM_CAPACITY, slots3);
 		halls.add(hallClosedOnMondays);
 		
-		Hall hallWith2EndHours = new Hall(LOW_CAPACITY, slots4);
+		Hall hallWith2EndHours = new Hall(MEDIUM_CAPACITY, slots4);
 		halls.add(hallWith2EndHours);
 		
 		Schedule schedule = new Schedule();

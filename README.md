@@ -6,9 +6,9 @@ Lien du rapport LaTeX : https://www.overleaf.com/project/61a489d2b8e8edc85346730
 
 Bugs à régler :
 - Incompatibilité des Concerts du jeu de test
+- Impossibilité d'affecter certains concerts dans certaines salles
 
 Option à développer (par ordre de priorité):
 - test sommaire du jeu de données
-- UI
 - Refaire proprement le test du Repository
-- Améliorer le jeu de donnée test
+- UI (pas le temps I guess)

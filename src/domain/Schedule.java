@@ -65,12 +65,15 @@ public class Schedule {
 		Hall choosenHall;
 		for (Event event : events) {
 			choosenHall = chooseHall(event);
-			assignments.put(event, choosenHall);
-			// If the map previously contained a mapping for the key, 
-			// the old value is replaced by the specified value.
+			if (choosenHall != null) {
+				assignments.put(event, choosenHall);
+				// If the map previously contained a mapping for the key, 
+				// the old value is replaced by the specified value.
+				choosenHall.addEvent(event);
+			}
 		}
 		for (Hall hall : halls) {
-			hall.updateTimetable();
+			hall.affectSlots();
 		}
 	}
 	
@@ -78,7 +81,7 @@ public class Schedule {
 		if (event instanceof Concert) {
 			if (allHallsHaveConcertThisWeek((Concert) event)) {
 				for (Hall h:halls) {
-					if (event.getDesiredCapacity() >= h.getCAPACITY()) {
+					if (checkCapacity(event, h)) {
 						List<Slot> slots = h.getHoursList();
 						for (Slot s : slots) {
 							if (((Concert) event).checkDate(s)) {
@@ -89,7 +92,7 @@ public class Schedule {
 				}
 			}else {
 				for (Hall h:halls) {
-					if (event.getDesiredCapacity() >= h.getCAPACITY()) {
+					if (checkCapacity(event, h)) {
 						if(!checkWeekHasConcert(h, ((Concert)event))) { // si la salle n'a pas de concert cette semaine
 							List<Slot> slots = h.getHoursList();
 							for (Slot s : slots) {
@@ -105,7 +108,7 @@ public class Schedule {
 
 		if (event instanceof TheatrePiece) {
 			for (Hall h:halls) {
-				if (event.getDesiredCapacity() >= h.getCAPACITY()) {
+				if (checkCapacity(event, h)) {
 					List<Slot> slots = h.getHoursList();
 					for (Slot s : slots) {
 						if (((TheatrePiece) event).checkDate(s)) {
@@ -150,6 +153,6 @@ public class Schedule {
 	}
 	
 	public boolean checkCapacity(Event event, Hall hall) {
-		return event.getDesiredCapacity() >= hall.getCAPACITY();
+		return event.getDesiredCapacity() <= hall.getCAPACITY();
 	}
 }

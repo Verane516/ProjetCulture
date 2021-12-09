@@ -56,7 +56,7 @@ public class Concert extends Event {
 
 	@Override
 	public String toString() {
-		return "Concert [DATE=" + CalendarPrint.getShortDescription(DATE)+ ", NAME=" + NAME + "]";
+		return "Concert [DATE=" + CalendarPrint.getShortDescription(DATE)+ ", NAME=" + NAME + ", CAPACITY=" + this.getDesiredCapacity() + "]";
 	}
 	
 	
