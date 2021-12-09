@@ -10,11 +10,11 @@ import java.util.UUID;
 public class ScheduleRepositoryInFile implements ScheduleRepository {
 
 	public void save(Schedule schedule) {
-		// TODO Auto-generated method stub
+		// à construire 
 	}
 	
 	public Schedule load(UUID id) {
-		// TODO Auto-generated method stub
+		// à construire 
 		return null;
 	}
 	

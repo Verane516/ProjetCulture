@@ -29,7 +29,6 @@ public class TheatrePiece extends Event {
 		return TITLE;
 	}
 
-	// TODO: faire un schéma pour expliquer comment on gère les vérifications de date et le mettre dans le rapport !
 	@Override
 	public boolean checkDate(Slot slot) {
 		long pieceStartInSec = (long) (START_DATE.getTimeInMillis() * 0.001);

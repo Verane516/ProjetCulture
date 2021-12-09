@@ -49,13 +49,6 @@ public class DataSetTest implements CalendarPrint {
 		
 		// CalendarPrint.getSomeInfo(daysOfJanuary.get(30)); // 31-ième jour de janvier
 		
-		// Supposons :
-		// - il y a deux concerts moyen par jour
-		// - tous les 10 jours il y a un gros concert
-		// - tous les 2 jours il y a un petit concert
-		// - chaque concert peut acceuillir 50 personnes, tous les 10 jours il y a un gros concert
-		// - les concerts débutent à 18h
-		
 		final int BIG_EVENT = 500;
 		final int MEDIUM_EVENT = 80;
 		final int SMALL_EVENT = 10;
@@ -82,6 +75,7 @@ public class DataSetTest implements CalendarPrint {
 		concerts.add(new Concert(10000, dateOfTheHudgeConcert, "Amazing concert too big for halls"));
 		
 		// On remarque qu'en exécutant plusieurs fois le programme on obtient pas les mêmes résultats
+		// Peut-être qu'on devrait recycler notre projet en générateur pseudo-aléatoire
 		
 		List<Event> theaterPieces = new ArrayList<Event>();
 		// semaine du 3 au 9 janvier

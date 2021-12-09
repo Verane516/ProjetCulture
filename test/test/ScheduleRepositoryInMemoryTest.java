@@ -20,7 +20,6 @@ public class ScheduleRepositoryInMemoryTest {
 		
 		System.out.println(schedule1.equals(schedule2)); 
 		// equals vérifie qu'on a le même objet
-		// true, on a bien récupéré le même objet
 		
 	}
 	
