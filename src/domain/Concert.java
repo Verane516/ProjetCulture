@@ -3,6 +3,8 @@ package domain;
 import java.util.Calendar;
 import java.util.Objects;
 
+import application.CalendarPrint;
+
 public class Concert extends Event {
 	private final Calendar DATE; // (AAAA,MM,JJ)
 	private final String NAME;
@@ -51,5 +53,12 @@ public class Concert extends Event {
 		return Objects.equals(DATE, other.DATE) && Objects.equals(NAME, other.NAME) 
 				&& Objects.equals(this.getDesiredCapacity(), other.getDesiredCapacity());
 	}
+
+	@Override
+	public String toString() {
+		return "Concert [DATE=" + CalendarPrint.getShortDescription(DATE)+ ", NAME=" + NAME + ", CAPACITY=" + this.getDesiredCapacity() + "]";
+	}
+	
+	
 	
 }

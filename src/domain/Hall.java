@@ -1,11 +1,12 @@
 package domain;
 
-import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.Set;
 import java.util.List;
 import java.util.Map;
+import java.util.HashMap;
 import java.util.Objects;
 import java.util.UUID;
-import java.util.HashMap;
 
 // Entity
 public class Hall {
@@ -13,21 +14,61 @@ public class Hall {
 	private final int CAPACITY;
 	
 	private final List<Slot> hoursList; //liste des horaires, l'heure d'ouverture est incluse dans la liste des créneaux disponibles
-	private List<Event> programmedEvents; //liste des événements programmés
+	private Set<Event> programmedEvents; //ensemble des événements programmés
 	private Map<Slot,Event> timetable; // affectation des créneaux
 	
 	public Hall(int capacity, List<Slot> hoursList) {
 		this.CAPACITY = capacity;
 		this.hoursList = hoursList;
 		this.ID = UUID.randomUUID();
-		this.programmedEvents = new ArrayList<Event>();
+		this.programmedEvents = new HashSet<Event>();
 		this.timetable = new HashMap<Slot, Event>();
 	}
 	
-	public void updateTimetable() {
-		// pour tous les évenements affectés à la salle
-		// si un créneau convient pour l'événement, on associe le créneau à l'évenement
-		// on peut affecter plusieurs créneaux à une pièce de théatre
+	// pour tous les évenements affectés à la salle
+	// si un créneau convient pour l'événement, on associe le créneau à l'évenement
+	// on peut affecter plusieurs créneaux à une pièce de théatre
+	public void affectSlots() {
+		boolean affected;
+		for (Slot slot: hoursList) {
+			affected = false;
+			// on affecte en priorité les créneaux aux pièces de théatre
+			for (Event event: programmedEvents) {
+				if ((event instanceof TheatrePiece)) {
+					if (((TheatrePiece) event).checkDate(slot)) {
+						if (!affected) {
+							affected = true;
+							timetable.put(slot, event);
+						}
+						else {
+							System.err.println("On a déjà affecté le créneau compatible avec l'évenement : " + event);
+						}
+					}
+				}
+			}
+			for (Event event: programmedEvents) {
+				if ((event instanceof Concert)) {
+					if (((Concert) event).checkDate(slot)) {
+						if (!affected) {
+							affected = true;
+							timetable.put(slot, event);
+						}
+						else {
+							System.err.println("On a déjà affecté le créneau compatible avec l'évenement : " + event);
+						}
+					}
+				}
+			}
+			
+		}
+	}
+	
+	public void addEvents(Set<Event> events){
+		programmedEvents.addAll(events);
+	}
+	
+	public void addEvent(Event event){
+		programmedEvents.add(event);
 	}
 	
 	public Map<Slot,Event> getTimetable() {
@@ -43,7 +84,7 @@ public class Hall {
 		return ID;
 	}
 	
-	public List<Event> getProgrammedEvent(){
+	public Set<Event> getProgrammedEvent(){
 		return programmedEvents;
 	}
 
