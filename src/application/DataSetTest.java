@@ -41,7 +41,7 @@ public class DataSetTest implements CalendarPrint {
 		List<Calendar> daysOfJanuary = new ArrayList<Calendar>();
 		daysOfJanuary.add(CALENDAR);
 		Calendar curCal;
-		for (int i = 1; i <= 30 ; i++) {
+		for (int i = 1; i <= 31 ; i++) {
 			curCal = (GregorianCalendar)CALENDAR.clone();
 			curCal.add(Calendar.DATE, i);
 			daysOfJanuary.add(curCal);
@@ -61,17 +61,18 @@ public class DataSetTest implements CalendarPrint {
 		for (int i = 0; i <= 30 ; i++) {
 			startDate = (GregorianCalendar)daysOfJanuary.get(i).clone();
 			startDate.add(Calendar.HOUR, DEFAULT_BEGIN_HOUR);
+			if (i%10 == 0) {
+				concerts.add(new Concert(BIG_EVENT, startDate, "big concert"));
+			}
 			concerts.add(new Concert(MEDIUM_EVENT, startDate, "medium concert"));
 			concerts.add(new Concert(MEDIUM_EVENT, startDate, "medium concert 2"));
 			if (i%2 == 0) {
 				concerts.add(new Concert(SMALL_EVENT, startDate, "small concert "));
 			}
-			if (i%10 == 0) {
-				concerts.add(new Concert(BIG_EVENT, startDate, "big concert"));
-			}
 		}
 		
 		Calendar dateOfTheHudgeConcert = new GregorianCalendar(YEAR, MONTH, 15);
+		dateOfTheHudgeConcert.add(Calendar.HOUR, DEFAULT_BEGIN_HOUR);
 		concerts.add(new Concert(10000, dateOfTheHudgeConcert, "Amazing concert too big for halls"));
 		
 		// On remarque qu'en exécutant plusieurs fois le programme on obtient pas les mêmes résultats
@@ -94,7 +95,7 @@ public class DataSetTest implements CalendarPrint {
 		
 		// créneaux :
 		
-		final int BEGIN_HOUR_1 = 19;
+		final int BEGIN_HOUR_1 = 17;
 		final int END_HOUR_1 = 21;
 		final int DEFAULT_MINUTES = 0;
 		
@@ -150,17 +151,18 @@ public class DataSetTest implements CalendarPrint {
 		
 		Set<Hall> halls = new HashSet<Hall>();
 		
+		Hall hallClosedOnMondays = new Hall(MEDIUM_CAPACITY, slots3);
+		halls.add(hallClosedOnMondays);
+		
+		Hall hallWith2EndHours = new Hall(MEDIUM_CAPACITY, slots4);
+		halls.add(hallWith2EndHours);
+		
 		Hall smallHall = new Hall(LOW_CAPACITY, slots1);
 		halls.add(smallHall);
 		
 		Hall bigHall = new Hall(BIG_CAPACITY, slots2);
 		halls.add(bigHall);
 		
-		Hall hallClosedOnMondays = new Hall(MEDIUM_CAPACITY, slots3);
-		halls.add(hallClosedOnMondays);
-		
-		Hall hallWith2EndHours = new Hall(MEDIUM_CAPACITY, slots4);
-		halls.add(hallWith2EndHours);
 		
 		Schedule schedule = new Schedule();
 		schedule.addEvents(events);

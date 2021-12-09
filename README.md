@@ -9,6 +9,9 @@ Bugs à régler :
 - Impossibilité d'affecter certains concerts dans certaines salles
 
 Option à développer (par ordre de priorité):
+- "La mairie d ́esire que l’ ́equipe
+planifie `a l’ avance le programme de 3 des 4 salles disponibles, ceci afin d’avoir des cr ́eneaux de libres
+pour des  ́ev`enements non pr ́evus en d ́ebut d’ann ́ee."
 - test sommaire du jeu de données
 - Refaire proprement le test du Repository
-- UI (pas le temps I guess)
+- UI
