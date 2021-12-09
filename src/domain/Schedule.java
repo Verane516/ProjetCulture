@@ -21,14 +21,14 @@ public class Schedule {
 	
 	private final UUID ID;
 	
-	private Map<Event, Hall> timetable; // on affecte chaque évenement à une salle
+	private Map<Event, Hall> assignments; // on affecte chaque évenement à une salle
 	// TODO: dans chaque salle on affecte l'évenement à un créneau
 	
 	private Set<Hall> halls;
 	
 	public Schedule() {
 		this.halls = new HashSet<Hall>();
-		this.timetable = new HashMap<Event, Hall>();
+		this.assignments = new HashMap<Event, Hall>();
 		this.ID = UUID.randomUUID();
 	}
 
@@ -37,7 +37,7 @@ public class Schedule {
 	}
 	
 	public Hall getHall(Event event) {
-		return timetable.get(event);
+		return assignments.get(event);
 	}
 	
 	public void addHalls(Set<Hall> halls) {
@@ -55,12 +55,23 @@ public class Schedule {
 	}
 	
 	public void addEvent(Event event) {
-		timetable.put(event, null);
+		assignments.put(event, null);
 	}
 	
+	// on affecte les évenements aux salles puis,
+	// pour toutes les salles, on met à jour leur emploi du temps
 	public void updateTimetables() {
-		// on affecte les évenements aux salles puis,
-		// pour toutes les salles, on met à jour leur emploi du temps
+		Set<Event> events = assignments.keySet();
+		Hall choosenHall;
+		for (Event event : events) {
+			choosenHall = chooseHall(event);
+			assignments.put(event, choosenHall);
+			// If the map previously contained a mapping for the key, 
+			// the old value is replaced by the specified value.
+		}
+		for (Hall hall : halls) {
+			hall.updateTimetable();
+		}
 	}
 	
 	public Hall chooseHall(Event event) {
@@ -71,9 +82,6 @@ public class Schedule {
 						List<Slot> slots = h.getHoursList();
 						for (Slot s : slots) {
 							if (((Concert) event).checkDate(s)) {
-								timetable.put(event, h);
-								// If the map previously contained a mapping for the key, 
-								// the old value is replaced by the specified value.
 								return h;
 							}
 						}
@@ -85,10 +93,9 @@ public class Schedule {
 						if(!checkWeekHasConcert(h, ((Concert)event))) { // si la salle n'a pas de concert cette semaine
 							List<Slot> slots = h.getHoursList();
 							for (Slot s : slots) {
-									if (((Concert) event).checkDate(s)) {
-										timetable.put(event, h);
-										return h;
-									}
+								if (((Concert) event).checkDate(s)) {
+									return h;
+								}
 							}
 						}
 					}
@@ -101,16 +108,14 @@ public class Schedule {
 				if (event.getDesiredCapacity() >= h.getCAPACITY()) {
 					List<Slot> slots = h.getHoursList();
 					for (Slot s : slots) {
-						//Calendar dateProg = ((TheatrePiece) event).getStartDate();
 						if (((TheatrePiece) event).checkDate(s)) {
-							timetable.put(event, h);
 							return h;
 						}
 					}
 				}
 			}
 		}
-		System.err.println("Pas de salle compatible");
+		System.err.println("Pas de salle compatible pour l'évenement : " + event);
 		return null;
 	}
 	
@@ -127,17 +132,21 @@ public class Schedule {
 		Calendar cal = concert.getDate();
 		int numWeek = cal.get(Calendar.WEEK_OF_YEAR);
 		Event event;
-		for (Entry<Event, Hall> pair : timetable.entrySet()) {
-		    if (pair.getValue().equals(hall)) { // on teste si les deux objets sont identiques ici
-		    	event = pair.getKey();
-		    	if (event instanceof Concert) {
-					if(((Concert)event).getDate().get(Calendar.WEEK_OF_YEAR) == numWeek) {
-						return true;
+		Hall hallOfEvent;
+		for (Entry<Event, Hall> pair : assignments.entrySet()) {
+			hallOfEvent = pair.getValue();
+			if (hallOfEvent != null) {
+			    if (hallOfEvent.equals(hall)) { // on teste si les deux objets sont identiques ici
+			    	event = pair.getKey();
+			    	if (event instanceof Concert) {
+						if(((Concert)event).getDate().get(Calendar.WEEK_OF_YEAR) == numWeek) {
+							return true;
+						}
 					}
-				}
-		    }
+			    }
+			}
 		}
-		return false;	
+		return false;
 	}
 	
 	public boolean checkCapacity(Event event, Hall hall) {

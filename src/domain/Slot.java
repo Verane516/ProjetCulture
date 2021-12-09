@@ -3,6 +3,8 @@ package domain;
 import java.util.Calendar;
 import java.util.Objects;
 
+import application.CalendarPrint;
+
 // value object
 public class Slot {
 
@@ -38,6 +40,11 @@ public class Slot {
 			return false;
 		Slot other = (Slot) obj;
 		return Objects.equals(END_DATE, other.END_DATE) && Objects.equals(START_DATE, other.START_DATE);
+	}
+
+	@Override
+	public String toString() {
+		return "Slot [START_DATE=" + CalendarPrint.getShortDescription(START_DATE) + ", END_DATE=" + CalendarPrint.getShortDescription(END_DATE) + "]";
 	}
 	
 	

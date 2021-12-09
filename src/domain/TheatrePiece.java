@@ -62,6 +62,11 @@ public class TheatrePiece extends Event {
 		return Objects.equals(END_DATE, other.END_DATE) && Objects.equals(START_DATE, other.START_DATE)
 				&& Objects.equals(TITLE, other.TITLE) && Objects.equals(this.getDesiredCapacity(), other.getDesiredCapacity());
 	}
+
+	@Override
+	public String toString() {
+		return "TheatrePiece [TITLE=" + TITLE + /*", START_DATE=" + START_DATE + ", END_DATE=" + END_DATE +*/ "]";
+	}
 	
 	
 }
