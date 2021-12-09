@@ -22,7 +22,6 @@ public class Schedule {
 	private final UUID ID;
 	
 	private Map<Event, Hall> assignments; // on affecte chaque évenement à une salle
-	// TODO: dans chaque salle on affecte l'évenement à un créneau
 	
 	private Set<Hall> halls;
 	
@@ -56,6 +55,7 @@ public class Schedule {
 	
 	public void addEvent(Event event) {
 		assignments.put(event, null);
+		// l'événement n'est affecté à aucune salle par défaut
 	}
 	
 	// on affecte les évenements aux salles puis,

@@ -13,15 +13,15 @@ public class Hall {
 	private final UUID ID;
 	private final int CAPACITY;
 	
-	private final List<Slot> hoursList; //liste des horaires, l'heure d'ouverture est incluse dans la liste des créneaux disponibles
-	private Set<Event> programmedEvents; //ensemble des événements programmés
-	private Map<Slot,Event> timetable; // affectation des créneaux
+	private final List<Slot> hoursList; // liste des horaires
+	private Set<Event> assignedEvents; // ensemble des événements affectés à la salle
+	private Map<Slot,Event> timetable; // attribution des créneaux aux événements
 	
 	public Hall(int capacity, List<Slot> hoursList) {
 		this.CAPACITY = capacity;
 		this.hoursList = hoursList;
 		this.ID = UUID.randomUUID();
-		this.programmedEvents = new HashSet<Event>();
+		this.assignedEvents = new HashSet<Event>();
 		this.timetable = new HashMap<Slot, Event>();
 	}
 	
@@ -33,7 +33,7 @@ public class Hall {
 		for (Slot slot: hoursList) {
 			affected = false;
 			// on affecte en priorité les créneaux aux pièces de théatre
-			for (Event event: programmedEvents) {
+			for (Event event: assignedEvents) {
 				if ((event instanceof TheatrePiece)) {
 					if (((TheatrePiece) event).checkDate(slot)) {
 						if (!affected) {
@@ -46,7 +46,7 @@ public class Hall {
 					}
 				}
 			}
-			for (Event event: programmedEvents) {
+			for (Event event: assignedEvents) {
 				if ((event instanceof Concert)) {
 					if (((Concert) event).checkDate(slot)) {
 						if (!affected) {
@@ -64,11 +64,11 @@ public class Hall {
 	}
 	
 	public void addEvents(Set<Event> events){
-		programmedEvents.addAll(events);
+		assignedEvents.addAll(events);
 	}
 	
 	public void addEvent(Event event){
-		programmedEvents.add(event);
+		assignedEvents.add(event);
 	}
 	
 	public Map<Slot,Event> getTimetable() {
@@ -85,7 +85,7 @@ public class Hall {
 	}
 	
 	public Set<Event> getProgrammedEvent(){
-		return programmedEvents;
+		return assignedEvents;
 	}
 
 	public List<Slot> getHoursList(){
